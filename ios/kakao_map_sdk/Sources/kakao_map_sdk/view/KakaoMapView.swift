@@ -79,6 +79,7 @@ class KakaoMapView: NSObject, FlutterPlatformView { // UIApplicationDelegate
         if kakaoMap.isEnginePrepared {
             kakaoMap.resetEngine()
         }
-        controller.onMapDestroy()
+        // Do not send onMapDestroy over the method channel here. deinit also runs while the FlutterEngine
+        // is being torn down (e.g. the app is swiped away), and sending then fails the engine's NSAssert.
     }
 }
